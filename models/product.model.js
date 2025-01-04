@@ -8,15 +8,27 @@ const productSchema = new mongoose.Schema(
     },
     desc: {
       type: String,
-      required: true,
     },
     price: {
       type: Number,
       required: true,
     },
+    quantity: {
+      type: Number,
+      required: true,
+    },
     imgeURL: {
       type: String,
+    },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "catygory",
       required: true,
+    },
+    status: {
+      type: String,
+      enum: ["active", "unactive", "deleted"],
+      default: "active",
     },
   },
   { timestamps: true }

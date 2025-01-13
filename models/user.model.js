@@ -9,6 +9,12 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true,
         unique:true,
+        validate:{
+            validator:(value)=>{
+                return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
+            },
+            message:'Please enter a valid email address'
+        }
     },
     password:{
         type:String,
@@ -16,12 +22,12 @@ const userSchema = new mongoose.Schema({
     },
     address:{
         type:String,
-        required:true
     },
     userType:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'userType',
-        required:true
+        required:true,
+        default:'677a49f36a92236b2f2c71f0'
     }
 },{
     timestamps:true

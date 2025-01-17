@@ -23,6 +23,16 @@ const userSchema = new mongoose.Schema({
     address:{
         type:String,
     },
+    phone:{
+        type:String,
+        unique:true,
+        validate:{
+            validator:(value)=>{
+                return /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(value);
+            },
+            message:'Please enter a valid phone number'
+        }
+    },
     userType:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'userType',

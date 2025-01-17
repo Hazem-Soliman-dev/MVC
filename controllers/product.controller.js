@@ -1,9 +1,11 @@
 const productModel = require("../models/product.model");
-
 exports.getProducts = async (req, res) => {
   try {
-    const products = await productModel.find();
-    if (!products) return res.status(404).json({ error: "Products not found" });
+    const products = await productModel
+      .find({ status: "active" })
+      .populate("category");
+    if (!products.length)
+      return res.status(404).json({ error: "Products not found" });
     res.status(200).json(products);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -12,7 +14,9 @@ exports.getProducts = async (req, res) => {
 
 exports.getProduct = async (req, res) => {
   try {
-    const product = await productModel.findById(req.params.id);
+    const product = await productModel
+      .findById(req.params.id, { status: "active" })
+      .populate("category");
     if (!product) return res.status(404).json({ error: "Product not found" });
     res.status(200).json(product);
   } catch (err) {

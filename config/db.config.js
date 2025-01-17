@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
-
-const connectDB = async()=>{
-    try
-    {
-    await mongoose.connect('mongodb://127.0.0.1:27017/mvc1')
-    console.log('database connected');
-    }catch(err){
-        console.log(err.message);
-    }
-}
+const dotenv = require('dotenv');
+dotenv.config();
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.DATABASE_URL);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
+  }
+};
 module.exports = connectDB;

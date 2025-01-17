@@ -1,8 +1,10 @@
 const userModel = require("../models/user.model");
 const hashing = require("../utili/hashing");
 const auth = require("../utili/auth");
+
 exports.createUser = async (req, res) => {
   const { name, email, password } = req.body;
+  if (!name) name = "unknown";
   if (!name || !email || !password) {
     return res.status(400).json({ error: "All fields are required" });
   }
